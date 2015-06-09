@@ -56,16 +56,28 @@ colnames(all_data_trimmed)<-c("ID","Age","N_CueCorr_AX_err","N_CueCorr_BY_err","
 library(ggplot2)
 lapsenum_plot<-ggplot(all_data_trimmed, aes(x=group,y=N_CueCorr_AX_err))+geom_point()
 lapsenum_plot
-#get means and SDs
-
-means<-c(mean(all_data_trimmed$N_CueCorr_AX_err[which(all_data_trimmed$group=="HC")]),
+#get means and SDs for AX
+means_AX<-c(mean(all_data_trimmed$N_CueCorr_AX_err[which(all_data_trimmed$group=="HC")]),
          mean(all_data_trimmed$N_CueCorr_AX_err[which(all_data_trimmed$group=="SZ")]))
-sds<-c(sd(all_data_trimmed$N_CueCorr_AX_err[which(all_data_trimmed$group=="HC")]),
+sds_AX<-c(sd(all_data_trimmed$N_CueCorr_AX_err[which(all_data_trimmed$group=="HC")]),
        sd(all_data_trimmed$N_CueCorr_AX_err[which(all_data_trimmed$group=="SZ")]))
-ttest_result<-t.test((all_data_trimmed$N_CueCorr_AX_err[which(all_data_trimmed$group=="HC")]),
+ttest_result_AX<-t.test((all_data_trimmed$N_CueCorr_AX_err[which(all_data_trimmed$group=="HC")]),
          (all_data_trimmed$N_CueCorr_AX_err[which(all_data_trimmed$group=="SZ")]))
-result<-rbind(means,sds)
-colnames(result)<-c("HC","SZ")
-rownames(result)
-result
-ttest_result
+result_AX<-rbind(means_AX,sds_AX)
+colnames(result_AX)<-c("HC","SZ")
+rownames(result_AX)
+result_AX
+ttest_result_AX
+#repeat for BY
+means_BY<-c(mean(all_data_trimmed$N_CueCorr_BY_err[which(all_data_trimmed$group=="HC")]),
+         mean(all_data_trimmed$N_CueCorr_BY_err[which(all_data_trimmed$group=="SZ")]))
+sds_BY<-c(sd(all_data_trimmed$N_CueCorr_BY_err[which(all_data_trimmed$group=="HC")]),
+       sd(all_data_trimmed$N_CueCorr_BY_err[which(all_data_trimmed$group=="SZ")]))
+ttest_result_BY<-t.test((all_data_trimmed$N_CueCorr_BY_err[which(all_data_trimmed$group=="HC")]),
+                     (all_data_trimmed$N_CueCorr_BY_err[which(all_data_trimmed$group=="SZ")]))
+result_BY<-rbind(means_BY,sds_BY)
+colnames(result_BY)<-c("HC","SZ")
+rownames(result_BY)
+result_BY
+ttest_result_BY
+

@@ -11,10 +11,13 @@
 #add grouping variable
 #identify lapse column
 #use GGplot to plot subject lapses by group
-###
-#housekeeping
-setwd("C:/Users/rphillips/Box Sync/Proj_AX_LAPSE/Data_lapses")
+####housekeeping
 install.packages("ggplot2")
+#from IRC comp
+#setwd("C:/Users/rphillips/Box Sync/Proj_AX_LAPSE/Data_lapses")
+#from CNS comp
+setwd("~/Box Sync/Proj_AX_LAPSE/Data_lapses")
+
 #load HC csv
 HC_data<-read.csv("HC_lapses.csv",stringsAsFactors=FALSE)
 #load SZ csv
@@ -58,7 +61,8 @@ lapsenum_plot<-ggplot(all_data_trimmed, aes(x=group,y=N_CueCorr_AX_err))+geom_po
 lapsenum_plot
 #get means and SDs for AX
 means_AX<-c(mean(all_data_trimmed$N_CueCorr_AX_err[which(all_data_trimmed$group=="HC")]),
-         mean(all_data_trimmed$N_CueCorr_AX_err[which(all_data_trimmed$group=="SZ")]))
+         mean(
+          hist((all_data_trimmed$N_CueCorr_AX_err[which(all_data_trimmed$group=="HC")]), breaks=40)
 sds_AX<-c(sd(all_data_trimmed$N_CueCorr_AX_err[which(all_data_trimmed$group=="HC")]),
        sd(all_data_trimmed$N_CueCorr_AX_err[which(all_data_trimmed$group=="SZ")]))
 ttest_result_AX<-t.test((all_data_trimmed$N_CueCorr_AX_err[which(all_data_trimmed$group=="HC")]),

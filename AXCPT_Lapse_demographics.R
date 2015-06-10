@@ -9,6 +9,9 @@ library(stringr)
 library(MASS)
 library(R.utils)
 ###
+###Housekeeping
+#CNS comp
+setwd("~/Box Sync/Proj_AX_LAPSE/Data_demographics/Relate_demographics_to_lapse")
 ###
 HC_namelist<-c('epc106','epc107','epc112','epc116',
                'epc121','epc132','epc138','epc174',
@@ -47,7 +50,6 @@ HC_demos<-HC_demos[-(which((HC_demos$ID %in% HC_namelist)=="FALSE")),]
 HC_lapses<-HC_lapses[-(which((HC_lapses$ID %in% HC_namelist)=="FALSE")),]
 #epc138 is missing demographic data, and so is dropped.
 HC_lapses<-HC_lapses[-(which((HC_lapses$ID %in% HC_demos$ID)=="FALSE")),]
-
 SZ_lapses<-SZ_lapses[-(which((SZ_lapses$ID %in% SZ_namelist)=="FALSE")),]
 SZ_lapses<-SZ_lapses[order(SZ_lapses$ID),]
 #betas, too
@@ -77,7 +79,29 @@ SZ_pcc_betas<-pcc_betas[grep("epp", pcc_betas$ID),]
 SZ_pcc_betas<-SZ_pcc_betas[order(SZ_pcc_betas$ID),]
 ###
 #modeling
-
+#l_dlpfc:
+HC_data<-merge(HC_demos,HC_lapses,by.x="ID")
+HC_data<-merge(HC_data,HC_l_dlpfc_betas,by.x="ID",)
+HC_age_on_lapses<-summary(lm(HC_data$N_CueCorr_AX_err ~ HC_data$Current.Age))
+HC_age_on_l_dlpfc<-summary(lm(HC_data$AX_CuCo_PrIn_Cu ~ HC_data$Current.Age))
+HC_IQ_on_lapses<-summary(lm(HC_data$N_CueCorr_AX_err ~ HC_data$WASI.Score))
+HC_IQ_on_l_dlpfc<-summary(lm(HC_data$AX_CuCo_PrIn_Cu ~ HC_data$WASI.Score))
+#r_dlpfc
+HC_data<-merge(HC_demos,HC_lapses,by.x="ID")
+HC_data<-merge(HC_data,HC_r_dlpfc_betas,by.x="ID",)
+HC_age_on_r_dlpfc<-summary(lm(HC_data$AX_CuCo_PrIn_Cu ~ HC_data$Current.Age))
+HC_IQ_on_r_dlpfc<-summary(lm(HC_data$AX_CuCo_PrIn_Cu ~ HC_data$WASI.Score))
+#l_vmpfc
+HC_data<-merge(HC_demos,HC_lapses,by.x="ID")
+HC_data<-merge(HC_data,HC_l_vmpfc_betas,by.x="ID",)
+HC_age_on_l_vmpfc<-summary(lm(HC_data$AX_CuCo_PrIn_Cu ~ HC_data$Current.Age))
+HC_IQ_on_l_vmpfc<-summary(lm(HC_data$AX_CuCo_PrIn_Cu ~ HC_data$WASI.Score))
+#pcc
+HC_data<-merge(HC_demos,HC_lapses,by.x="ID")
+HC_data<-merge(HC_data,HC_pcc_betas,by.x="ID",)
+HC_age_on_pcc<-summary(lm(HC_data$AX_CuCo_PrIn_Cu ~ HC_data$Current.Age))
+HC_IQ_on_pcc<-summary(lm(HC_data$AX_CuCo_PrIn_Cu ~ HC_data$WASI.Score))
+#SZIQ
 #l_dlpfc:
 SZ_data<-merge(SZ_demos,SZ_lapses,by.x="ID")
 SZ_data<-merge(SZ_data,SZ_l_dlpfc_betas,by.x="ID",)
@@ -90,15 +114,6 @@ SZ_data<-merge(SZ_demos,SZ_lapses,by.x="ID")
 SZ_data<-merge(SZ_data,SZ_r_dlpfc_betas,by.x="ID",)
 SZ_age_on_r_dlpfc<-summary(lm(SZ_data$AX_CuCo_PrIn_Cu ~ SZ_data$Current.Age))
 SZ_IQ_on_r_dlpfc<-summary(lm(SZ_data$AX_CuCo_PrIn_Cu ~ as.numeric(SZ_data$WASI.IQ.Full.2.)))
-plot(SZ_data$Current.Age, SZ_data$AX_CuCo_PrIn_Cu,xlim=c(0,50),ylim=c(-10,10))
-SZ_data$ID[1]
-SZ_data$Current.Age[1]
-SZ_lapses$N_CueCorr_AX_err[1]
-SZ_lapses$ID[1]
-SZ_r_dlpfc_betas$AX_CuCo_PrIn_Cu[1]
-SZ_r_dlpfc_betas$ID[1]
-SZ_data$AX_CuCo_PrIn_Cu[1]
-abline(lm(SZ_data$AX_CuCo_PrIn_Cu ~ SZ_data$Current.Age))
 #l_vmpfc
 SZ_data<-merge(SZ_demos,SZ_lapses,by.x="ID")
 SZ_data<-merge(SZ_data,SZ_l_vmpfc_betas,by.x="ID",)
@@ -220,4 +235,7 @@ HC_IQ_results
 SZ_IQ_results
 HC_gender_results
 SZ_gender_results
+
+cor(SZ_data$N_CueCorr_AX_err[which(as.numeric(SZ_data$WASI.IQ.Full.2., na.rm=FALSE)!="NA")],as.numeric(SZ_data$WASI.IQ.Full.2., na.rm=FALSE)[which(as.numeric(SZ_data$WASI.IQ.Full.2., na.rm=FALSE)!="NA")])
+summary(lm(SZ_data$AX_CuCo_PrIn_Cu ~ as.numeric(SZ_data$WASI.IQ.Full.2.)))
 

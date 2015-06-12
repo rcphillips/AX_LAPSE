@@ -12,6 +12,8 @@ library(R.utils)
 ###Housekeeping
 #CNS comp
 setwd("~/Box Sync/Proj_AX_LAPSE/Data_demographics/Relate_demographics_to_lapse")
+#IRC comp
+setwd("C:/Users/rphillips/Box Sync/Proj_AX_LAPSE/Data_demographics/Relate_demographics_to_lapse")
 ###
 HC_namelist<-c('epc106','epc107','epc112','epc116',
                'epc121','epc132','epc138','epc174',

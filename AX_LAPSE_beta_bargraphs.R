@@ -21,12 +21,12 @@ pcc_betas<-read.csv('L_PCC_-10_-52_14_r5_betas.csv')
 l_ips_betas<-read.csv('L_IPL_PCG_-42_-30_50_r5_betas.csv')
 r_ips_betas<-read.csv('FOX_R_IPL_53_-32_56_r5_betas.csv')
 
-HC_betas<-subset(pcc_betas, pcc_betas$class=="HC")
+HC_betas<-subset(l_dlpfc_betas, l_dlpfc_betas$class=="HC")
 HC_betas<-HC_betas[1:23,]#gotta remove the excel calculations!
 ###
 #Now, for two groups, we repeat the process above for the second group, then unite them
 #in the graph below.
-SZ_betas<-subset(pcc_betas, pcc_betas$class=="SZ")
+SZ_betas<-subset(l_dlpfc_betas, l_dlpfc_betas$class=="SZ")
 SZ_betas<-SZ_betas[1:32,]#gotta remove the excel calculations!
 
 ###
@@ -36,7 +36,7 @@ myplot<-barplot(c(mean(HC_betas$AX_CuCo_PrCo_Cu),
                   mean(HC_betas$AX_CuCo_PrIn_Cu), 
                   mean(SZ_betas$AX_CuCo_PrCo_Cu), 
                   mean(SZ_betas$AX_CuCo_PrIn_Cu)),
-                ylab="Beta Value", 
+                ylab="Beta Value (a.u.)", 
                 ylim=c(-2,6),
                 xlim=c(0,4.5),
                 col=c("cadetblue1","darkblue","brown3","darkred"),
@@ -46,7 +46,7 @@ myplot<-barplot(c(mean(HC_betas$AX_CuCo_PrCo_Cu),
 legend("topright", c("HC Correct","HC Lapse", "SZ Correct","SZ Lapse"), col=c("black","black","black","black"), bty="n", pch= 22, 
        pt.bg=c("cadetblue1","darkblue","brown3","darkred"), pt.cex=2.5, cex=1.2)
 abline(h=0)
-title(main = list("PCC", font = 4, cex=2))
+title(main = list("L_dlPFC", font = 4, cex=2))
 # Get standard deviation of each group
 # The standard deviations are saved in a matrix of same size 
 # as the matrix with midpoints, this is useful for plotting 

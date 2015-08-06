@@ -177,39 +177,39 @@ SZ_gender_on_pcc<-chisq.test(SZ_tbl)
 ###
 #results of all this - age
 HC_age_results<-rbind(
-  HC_age_on_lapses$r.squared,
-  HC_age_on_l_dlpfc$r.squared,
-  HC_age_on_r_dlpfc$r.squared,
-  HC_age_on_l_vmpfc$r.squared,
-  HC_age_on_pcc$r.squared)
+  HC_age_on_lapses$coefficients[2,4],
+  HC_age_on_l_dlpfc$coefficients[2,4],
+  HC_age_on_r_dlpfc$coefficients[2,4],
+  HC_age_on_l_vmpfc$coefficients[2,4],
+  HC_age_on_pcc$coefficients[2,4])
 rownames(HC_age_results)<-c("HC_lapses","HC_l_dlpfc", "HC_r_dlpfc","HC_l_vmpfc","HC_pcc")
 colnames(HC_age_results)<-c("HC")
 
 SZ_age_results<-rbind(
-  SZ_age_on_lapses$r.squared,
-  SZ_age_on_l_dlpfc$r.squared,
-  SZ_age_on_r_dlpfc$r.squared,
-  SZ_age_on_l_vmpfc$r.squared,
-  SZ_age_on_pcc$r.squared)
+  SZ_age_on_lapses$coefficients[2,4],
+  SZ_age_on_l_dlpfc$coefficients[2,4],
+  SZ_age_on_r_dlpfc$coefficients[2,4],
+  SZ_age_on_l_vmpfc$coefficients[2,4],
+  SZ_age_on_pcc$coefficients[2,4])
 rownames(SZ_age_results)<-c("SZ_lapses","SZ_l_dlpfc", "SZ_r_dlpfc","SZ_l_vmpfc","SZ_pcc")
 colnames(SZ_age_results)<-c("SZ")
 
 #results of all this - IQ
 HC_IQ_results<-rbind(
-  HC_IQ_on_lapses$r.squared,
-  HC_IQ_on_l_dlpfc$r.squared,
-  HC_IQ_on_r_dlpfc$r.squared,
-  HC_IQ_on_l_vmpfc$r.squared,
-  HC_IQ_on_pcc$r.squared)
+  HC_IQ_on_lapses$coefficients[2,4],
+  HC_IQ_on_l_dlpfc$coefficients[2,4],
+  HC_IQ_on_r_dlpfc$coefficients[2,4],
+  HC_IQ_on_l_vmpfc$coefficients[2,4],
+  HC_IQ_on_pcc$coefficients[2,4])
 rownames(HC_IQ_results)<-c("HC_lapses","HC_l_dlpfc", "HC_r_dlpfc","HC_l_vmpfc","HC_pcc")
 colnames(HC_IQ_results)<-c("HC")
 
 SZ_IQ_results<-rbind(
-  SZ_IQ_on_lapses$r.squared,
-  SZ_IQ_on_l_dlpfc$r.squared,
-  SZ_IQ_on_r_dlpfc$r.squared,
-  SZ_IQ_on_l_vmpfc$r.squared,
-  SZ_IQ_on_pcc$r.squared)
+  SZ_IQ_on_lapses$coefficients[2,4],
+  SZ_IQ_on_l_dlpfc$coefficients[2,4],
+  SZ_IQ_on_r_dlpfc$coefficients[2,4],
+  SZ_IQ_on_l_vmpfc$coefficients[2,4],
+  SZ_IQ_on_pcc$coefficients[2,4])
 rownames(SZ_IQ_results)<-c("SZ_lapses","SZ_l_dlpfc", "SZ_r_dlpfc","SZ_l_vmpfc","SZ_pcc")
 colnames(SZ_IQ_results)<-c("SZ")
 
@@ -237,6 +237,16 @@ HC_IQ_results
 SZ_IQ_results
 HC_gender_results
 SZ_gender_results
+
+#correction for multiple comparisons
+#I'm going to use the bulit in method for adjusting p.values, focusing only on the added-in MC
+#IQ tests.
+
+all_IQ<-rbind(HC_IQ_results,SZ_IQ_results)
+
+adjusted_IQ_tests
+<-p.adjust(all_IQ, "holm")
+
 
 cor(SZ_data$N_CueCorr_AX_err[which(as.numeric(SZ_data$WASI.IQ.Full.2., na.rm=FALSE)!="NA")],as.numeric(SZ_data$WASI.IQ.Full.2., na.rm=FALSE)[which(as.numeric(SZ_data$WASI.IQ.Full.2., na.rm=FALSE)!="NA")])
 summary(lm(SZ_data$AX_CuCo_PrIn_Cu ~ as.numeric(SZ_data$WASI.IQ.Full.2.)))

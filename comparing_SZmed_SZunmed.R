@@ -94,22 +94,21 @@ t.test(SZ_med_pcc$AX_CuCo_PrCo_Cu,SZ_unmed_pcc$AX_CuCo_PrCo_Cu)
 ###
 #plotting:
 #add medgroup points
-plot(y=SZ_med_l_ipl$AX_CuCo_PrIn_Cu.AX_CuCo_PrCo_Cu, x=1:length(SZ_med_l_ipl$AX_CuCo_PrCo_Cu),
-       main="l_ipl_Beta_Values_for_lapse-correct_trials",
-       xlab="Subject",
-       ylab="Beta Value")
+plot(y=SZ_med_r_ipl$AX_CuCo_PrIn_Cu.AX_CuCo_PrCo_Cu, x=c(rep(1,length(SZ_med_r_ipl$AX_CuCo_PrCo_Cu))),
+     main="r_ipl_Beta_Values_for_lapse-correct_trials",
+     xlab="Subject Group",
+     ylab="Beta Value (a.u.)",
+     xlim=c(0,4),
+     ylim=c(-8,8),
+     xaxt="n")
+axis(1,at=c(1,3),labels=c("Med","Unmed"))
 #put unmed group points on top
-points(y=SZ_unmed_l_ipl$AX_CuCo_PrIn_Cu.AX_CuCo_PrCo_Cu, x=1:length(SZ_unmed_l_ipl$AX_CuCo_PrCo_Cu), pch =16)
-
-
-
-
+means=c(mean(SZ_med_r_ipl$AX_CuCo_PrIn_Cu.AX_CuCo_PrCo_Cu),mean(SZ_unmed_r_ipl$AX_CuCo_PrIn_Cu.AX_CuCo_PrCo_Cu))
+points(y=SZ_unmed_r_ipl$AX_CuCo_PrIn_Cu.AX_CuCo_PrCo_Cu, x=c(rep(3,length(SZ_unmed_r_ipl$AX_CuCo_PrCo_Cu))), pch =16)
+points(y=means,x=c(1,3), pch = '-', cex = 4)
+means=c(mean(SZ_med_r_ipl$AX_CuCo_PrIn_Cu.AX_CuCo_PrCo_Cu),mean(SZ_unmed_r_ipl$AX_CuCo_PrIn_Cu.AX_CuCo_PrCo_Cu))
 #add legend at the end of everything so I don't have to find a place for it in every plot
-legend(x = 17, y=2.6, c("Med","Unmed"), pch=c(1,16))
-
-
-
-# 
+legend(x = 3, y=8, c("Med","Unmed"), pch=c(1,16))
 # 
 # l_dlpfc_betas<-read.csv('FOX_L_DLPFC_-42_45_21_r5_betas.csv')
 # r_dlpfc_betas<-read.csv('FOX_R_DLPFC_42_47_15_r5_betas.csv')
